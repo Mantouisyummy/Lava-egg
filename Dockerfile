@@ -1,5 +1,5 @@
 # Use an official Ubuntu as a parent image
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -40,8 +40,19 @@ RUN apt-get update && apt-get install -y \
 RUN ln -s /usr/bin/python${PYTHON_VERSION} /usr/local/bin/python
 RUN ln -s /opt/java/openjdk/bin /usr/local/bin
 
-RUN apk add --no-cache --update curl ca-certificates openssl git tar bash sqlite fontconfig \
-    && adduser --disabled-password --home /home/container container
+RUN apt-get update && apt-get install -y \
+    curl \
+    ca-certificates \
+    openssl \
+    git \
+    tar \
+    bash \
+    sqlite3 \
+    fontconfig \
+    --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -m -d /home/container -s /bin/bash container
 
 USER container
 ENV  USER=container HOME=/home/container
