@@ -4,12 +4,9 @@ FROM alpine:3.18
 # Set environment variables
 ENV JAVA_HOME=/opt/java/openjdk
 
-
 # Define build arguments
-ARG OPENJDK_VERSION
 ARG PYTHON_VERSION
-
-ENV PYTHON_VERSION=${PYTHON_VERSION}  # Specify the desired Python version here
+ARG OPENJDK_VERSION
 
 # Install dependencies
 RUN apk update && apk add --no-cache \
