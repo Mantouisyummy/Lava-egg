@@ -1,5 +1,5 @@
-# Use an official Debian as a parent image
-FROM debian:stable-slim
+# Use an official Ubuntu as a parent image
+FROM ubuntu:20.04
 
 # Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
