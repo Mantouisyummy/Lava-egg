@@ -44,11 +44,7 @@ RUN cd /usr/src \
     && cd / \
     && rm -rf /usr/src/Python-${PYTHON_VERSION} /usr/src/Python-${PYTHON_VERSION}.tgz
 
-# Add AdoptOpenJDK GPG key and repository
-RUN wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --import - \
-    && echo "https://packages.adoptium.net/artifactory/apk/alpine" >> /etc/apk/repositories
-
-# Install specified OpenJDK version
+# Install OpenJDK
 RUN apk update && apk add --no-cache temurin-${OPENJDK_VERSION}-jdk
 
 # Create a symbolic link to set OpenJDK path to /usr/local/bin
