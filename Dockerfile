@@ -40,4 +40,4 @@ RUN python${PYTHON_VERSION} --version \
     && java -version
 
 # Default command
-CMD ["python", "--version"]
+CMD ["python3"]
