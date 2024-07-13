@@ -35,9 +35,12 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Create a symbolic link to set Python path to /usr/local/bin/python
+RUN ln -s /usr/bin/python${PYTHON_VERSION} /usr/local/bin/python
+
 # Verify installations
-RUN python${PYTHON_VERSION} --version \
+RUN python --version \
     && java -version
 
 # Default command
-CMD ["python3"]
+CMD ["python"]
