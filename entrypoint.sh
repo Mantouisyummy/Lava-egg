@@ -11,9 +11,9 @@ if [[ -f /home/container/${REQUIREMENTS_FILE} ]]; then
 fi
 
 if [ "$START_LAVALINK" = "true" ]; then
-    STARTUP="/usr/local/bin/python /home/container/main.py & /usr/local/bin/java -jar /home/container/server/Lavalink.jar"
+    STARTUP="python /home/container/main.py & java -jar /home/container/server/Lavalink.jar"
 else
-    STARTUP="/usr/local/bin/python /home/container/main.py"
+    STARTUP="python /home/container/main.py"
 fi
 
 # Evaluate and execute the startup command
