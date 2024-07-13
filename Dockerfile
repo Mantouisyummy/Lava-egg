@@ -25,11 +25,13 @@ RUN add-apt-repository ppa:deadsnakes/ppa \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Add AdoptOpenJDK GPG key and repository
+RUN wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - \
+    && add-apt-repository --yes https://packages.adoptium.net/artifactory/deb/
+
 # Install specified OpenJDK version
-RUN wget -O- https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - \
-    && add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ \
-    && apt-get update && apt-get install -y \
-    adoptopenjdk-${OPENJDK_VERSION}-hotspot \
+RUN apt-get update && apt-get install -y \
+    temurin-${OPENJDK_VERSION}-jdk \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
