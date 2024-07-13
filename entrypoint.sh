@@ -17,7 +17,7 @@ fi
 # Run the Server
 if [ "$START_LAVALINK" = "true" ]; then
     /usr/local/bin/python /home/container/main.py &
-    /usr/local/bin/java -jar /home/container/server/Lavalink.jar
+    java -jar /home/container/server/Lavalink.jar
 else
     /usr/local/bin/python /home/container/main.py
 fi
