@@ -8,7 +8,7 @@ pip --version
 
 # Replace Startup Variables
 if [[ -f /home/container/${REQUIREMENTS_FILE} ]]; then
-    pip install -U --prefix .local -r ${REQUIREMENTS_FILE}
+    python -m pip install -U --prefix .local -r ${REQUIREMENTS_FILE}
 fi
 
 if [ "$START_LAVALINK" = "true" ]; then
