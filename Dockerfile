@@ -8,11 +8,19 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG PYTHON_VERSION
 ARG OPENJDK_VERSION
 
-# Install dependencies
+# Set environment variables for Java and Python paths
+ENV JAVA_HOME=/opt/java/openjdk
+ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
+
+# Combine the PATH environment variables for OpenJDK and Python
+ENV PATH=/opt/java/openjdk/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Install base dependencies
 RUN apt-get update && apt-get install -y \
     software-properties-common \
     wget \
     gnupg \
+    tini \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -23,24 +31,27 @@ RUN add-apt-repository ppa:deadsnakes/ppa \
     python3-pip \
     python${PYTHON_VERSION}-venv \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && ln -s /usr/bin/python${PYTHON_VERSION} /usr/local/bin/python
 
-# Add AdoptOpenJDK GPG key and repository
+# Add AdoptOpenJDK GPG key and repository and install specified OpenJDK version
 RUN wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - \
-    && add-apt-repository --yes https://packages.adoptium.net/artifactory/deb/
-
-# Install specified OpenJDK version
-RUN apt-get update && apt-get install -y \
+    && add-apt-repository --yes https://packages.adoptium.net/artifactory/deb/ \
+    && apt-get update && apt-get install -y \
     temurin-${OPENJDK_VERSION}-jdk \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a symbolic link to set Python path to /usr/local/bin/python
-RUN ln -s /usr/bin/python${PYTHON_VERSION} /usr/local/bin/python
+# Create a non-root user and set working directory
+RUN useradd -d /home/container -m container
+USER container
+ENV USER=container HOME=/home/container
+WORKDIR /home/container
 
-# Verify installations
-RUN python --version \
-    && java -version
+# Setup entrypoint script
+COPY --chown=container:container ./../entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Default command
-CMD ["python", "--version"]
+# Define the entrypoint and command
+ENTRYPOINT ["/usr/bin/tini", "-g", "--"]
+CMD ["/entrypoint.sh"]
