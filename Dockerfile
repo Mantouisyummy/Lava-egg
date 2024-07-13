@@ -4,13 +4,17 @@ FROM alpine:3.18
 # Set environment variables
 ENV JAVA_HOME=/opt/java/openjdk
 
+
 # Define build arguments
-ARG PYTHON_VERSION
 ARG OPENJDK_VERSION
+ARG PYTHON_VERSION
+
+ENV PYTHON_VERSION=${PYTHON_VERSION}  # Specify the desired Python version here
 
 # Install dependencies
 RUN apk update && apk add --no-cache \
     bash \
+    build-base \
     curl \
     ca-certificates \
     fontconfig \
@@ -20,10 +24,25 @@ RUN apk update && apk add --no-cache \
     sqlite \
     tar \
     wget \
-    && rm -rf /var/cache/apk/*
+    zlib-dev \
+    bzip2-dev \
+    xz-dev \
+    ncurses-dev \
+    libffi-dev \
+    readline-dev \
+    tk-dev \
+    linux-headers
 
-# Install specified Python version
-RUN apk add --no-cache python${PYTHON_VERSION} py3-pip python${PYTHON_VERSION}-venv
+# Install Python from source
+RUN cd /usr/src \
+    && wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz \
+    && tar xzf Python-${PYTHON_VERSION}.tgz \
+    && cd Python-${PYTHON_VERSION} \
+    && ./configure --enable-optimizations \
+    && make altinstall \
+    && ln -s /usr/local/bin/python${PYTHON_VERSION%.*} /usr/local/bin/python \
+    && cd / \
+    && rm -rf /usr/src/Python-${PYTHON_VERSION} /usr/src/Python-${PYTHON_VERSION}.tgz
 
 # Add AdoptOpenJDK GPG key and repository
 RUN wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --import - \
@@ -32,8 +51,7 @@ RUN wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | gp
 # Install specified OpenJDK version
 RUN apk update && apk add --no-cache temurin-${OPENJDK_VERSION}-jdk
 
-# Create a symbolic link to set Python path to /usr/local/bin/python
-RUN ln -s /usr/bin/python${PYTHON_VERSION} /usr/local/bin/python
+# Create a symbolic link to set OpenJDK path to /usr/local/bin
 RUN ln -s /opt/java/openjdk/bin /usr/local/bin
 
 # Create a user and set up home directory
