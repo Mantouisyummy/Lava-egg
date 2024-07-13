@@ -4,6 +4,7 @@ cd /home/container
 # Output Current Java Version
 java -version
 python --version
+pip --version
 
 # Replace Startup Variables
 if [[ -f /home/container/${REQUIREMENTS_FILE} ]]; then
