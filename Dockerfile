@@ -30,6 +30,9 @@ RUN apk update && apk add --no-cache \
     tk-dev \
     linux-headers
 
+# Create the /usr/src directory
+RUN mkdir -p /usr/src
+
 # Install Python from source
 RUN cd /usr/src \
     && wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz \
