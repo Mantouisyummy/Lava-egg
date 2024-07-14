@@ -17,7 +17,7 @@ RUN apt-get update && \
     apt-get install -y software-properties-common wget gnupg && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
-    apt-get install -y python${PYTHON_VERSION} python${PYTHON_VERSION}-venv python3-pip && \
+    apt-get install -y python${PYTHON_VERSION} python${PYTHON_VERSION}-venv python3-pip pythonn${PYTHON_VERSION}-dev && \
     wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - && \
     add-apt-repository --yes https://packages.adoptium.net/artifactory/deb/ && \
     apt-get update && \
