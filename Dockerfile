@@ -9,6 +9,8 @@ ENV PYTHONUNBUFFERED=1
 ENV DEBIAN_FRONTEND=noninteractive
 ENV JAVA_HOME=/opt/java/openjdk
 
+ARG OPENJDK_VERSION
+
 RUN apt-get update && \
     apt-get install -y wget gnupg2 && \
     apt-get install -y software-properties-common && \
