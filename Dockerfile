@@ -25,7 +25,6 @@ RUN apk update && \
     curl -L -o /tmp/openjdk.tar.gz "https://api.adoptium.net/v3/binary/latest/${OPENJDK_VERSION}/ga/alpine-linux/x64/jdk/hotspot/normal/eclipse" && \
     tar -xzf /tmp/openjdk.tar.gz -C /opt/java && \
     mv /opt/java/jdk* /opt/java/openjdk && \
-    ln -s /opt/java/openjdk/bin/java /usr/local/bin/java && \
     rm /tmp/openjdk.tar.gz && \
     rm -rf /var/cache/apk/*
 
@@ -37,8 +36,9 @@ FROM python:${PYTHON_VERSION}
 ENV PYTHONUNBUFFERED=1
 ENV JAVA_HOME=/opt/java/openjdk
 
-COPY --from=builder /opt/java/openjdk /opt/java/openjdk
-COPY --from=builder /usr/local/bin/java /usr/local/bin/java
+COPY --from=builder /opt/java /opt/java
+
+RUN java -version
 
 RUN apk add --no-cache \
         bash \
