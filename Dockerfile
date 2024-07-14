@@ -25,7 +25,7 @@ RUN apt-get update && \
     apt-get install -y temurin-${OPENJDK_VERSION}-jdk && \
     ln -s /usr/bin/python${PYTHON_VERSION} /usr/local/bin/python && \
     ln -s /opt/java/openjdk/bin /usr/local/bin && \
-    ln -sf /usr/local/bin/pip${PYTHON_VERSION}  /usr/bin/pip3 \
+    ln -sf /usr/local/bin/pip${PYTHON_VERSION} /usr/bin/pip && \
     apt-get install -y curl ca-certificates openssl git tar bash sqlite3 fontconfig --no-install-recommends && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
