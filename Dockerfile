@@ -12,23 +12,26 @@ ARG OPENJDK_VERSION
 
 RUN apk update && \
     apk add --no-cache \
-        openjdk${OPENJDK_VERSION} \
+        bash \
         curl \
-        ca-certificates \
+        gnupg \
         openssl \
         git \
         tar \
-        bash \
         sqlite \
-        fontconfig && \
-    ln -s /usr/lib/jvm/java-17-openjdk/bin /usr/local/bin && \
-    apk add --no-cache --virtual .build-deps \
-        build-base \
-        && pip install --upgrade pip \
-        && apk del .build-deps && \
+        fontconfig \
+        libstdc++ && \
+    mkdir -p /opt/java && \
+    curl -L -o /tmp/openjdk.tar.gz "https://api.adoptium.net/v3/binary/latest/${OPENJDK_VERSION}/ga/alpine-linux/x64/jdk/hotspot/normal/eclipse" && \
+    tar -xzf /tmp/openjdk.tar.gz -C /opt/java && \
+    mv /opt/java/jdk* /opt/java/openjdk && \
+    ln -s /opt/java/openjdk/bin/java /usr/local/bin/java && \
+    rm /tmp/openjdk.tar.gz && \
     rm -rf /var/cache/apk/*
 
-RUN pip install --upgrade pi
+RUN java -version
+
+RUN pip install --upgrade pip
 
 RUN adduser -D -h /home/container -s /bin/bash container
 
