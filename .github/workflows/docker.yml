@@ -38,5 +38,5 @@ jobs:
           tags: |
             ghcr.io/mantouisyummy/pyandjdk:python-${{ matrix.python-version }}-openjdk-${{ matrix.openjdk-version }}
           build-args: |
-            PYTHON_VERSION=${{ matrix.python-version }}-slim
+            PYTHON_VERSION=${{ matrix.python-version }}-alpine
             OPENJDK_VERSION=${{ matrix.openjdk-version }}
