@@ -12,7 +12,7 @@ if [[ -f /home/container/${REQUIREMENTS_FILE} ]]; then
 fi
 
 if [ "$START_LAVALINK" = "true" ]; then
-    STARTUP="python /home/container/main.py & java -jar /home/container/server/Lavalink.jar"
+    STARTUP="python /home/container/main.py & cd /home/container/server/ && java -jar Lavalink.jar"
 else
     STARTUP="python /home/container/main.py"
 fi
