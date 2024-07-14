@@ -25,6 +25,8 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN pip install --upgrade pip
+
 # Add a non-root user
 RUN useradd -m -d /home/container -s /bin/bash container
 
