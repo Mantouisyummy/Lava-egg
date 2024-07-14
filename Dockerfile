@@ -6,15 +6,15 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV JAVA_HOME=/opt/java/openjdk
 
 # Define build arguments
-ARG PYTHON_VERSION
-ARG OPENJDK_VERSION
+ARG PYTHON_VERSION=3.12
+ARG OPENJDK_VERSION=17
 
 # Install dependencies and specified Python version
 RUN apt-get update && \
     apt-get install -y software-properties-common wget gnupg && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
-    apt-get install -y python${PYTHON_VERSION} python3-pip python${PYTHON_VERSION}-venv && \
+    apt-get install -y python${PYTHON_VERSION} python${PYTHON_VERSION}-venv python${PYTHON_VERSION}-distutils python3-pip && \
     wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - && \
     add-apt-repository --yes https://packages.adoptium.net/artifactory/deb/ && \
     apt-get update && \
