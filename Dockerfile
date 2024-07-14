@@ -12,7 +12,7 @@ ENV JAVA_HOME=/opt/java/openjdk
 ARG OPENJDK_VERSION
 
 RUN apt-get update && \
-    apt-get install -y software-properties-common curl gnupg && \
+    apt-get install -y software-properties-common curl gnupg python3-launchpadlib && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
     curl -fsSL https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - && \
