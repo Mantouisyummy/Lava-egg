@@ -35,10 +35,9 @@ FROM python:${PYTHON_VERSION}
 
 ENV PYTHONUNBUFFERED=1
 ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 COPY --from=builder /opt/java /opt/java
-
-RUN java -version
 
 RUN apk add --no-cache \
         bash \
@@ -47,6 +46,9 @@ RUN apk add --no-cache \
         py3-pandas \
         py3-numpy \
         libstdc++
+
+# Verify Java installation
+RUN java -version
 
 # Add a non-root user
 RUN adduser -D -h /home/container -s /bin/bash container
