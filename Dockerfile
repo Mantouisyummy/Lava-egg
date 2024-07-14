@@ -18,9 +18,9 @@ RUN apt-get update && \
     apt-get install -y software-properties-common wget gnupg && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
-    apt-get install -y python${PYTHON_VERSION} python${PYTHON_VERSION}-venv python3-pip python${PYTHON_VERSION}-dev && \
+    apt-get install -y python${PYTHON_VERSION} python${PYTHON_VERSION}-venv python3-pip python${PYTHON_VERSION}-dev python${PYTHON_VERSION}-distutils && \
     wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - && \
-    curl -sS https://bootstrap.pypa.io/get-pip.py | python${PYTHON_VERSION} \
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python${PYTHON_VERSION} && \
     add-apt-repository --yes https://packages.adoptium.net/artifactory/deb/ && \
     apt-get update && \
     apt-get install -y temurin-${OPENJDK_VERSION}-jdk && \
