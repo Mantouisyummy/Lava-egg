@@ -20,6 +20,8 @@ RUN apk update && \
         tar \
         sqlite \
         fontconfig \
+        py3-pandas \
+        py3-numpy \
         libstdc++ && \
     mkdir -p /opt/java && \
     curl -L -o /tmp/openjdk.tar.gz "https://api.adoptium.net/v3/binary/latest/${OPENJDK_VERSION}/ga/alpine-linux/x64/jdk/hotspot/normal/eclipse" && \
