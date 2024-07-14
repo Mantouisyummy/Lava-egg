@@ -12,10 +12,10 @@ ENV JAVA_HOME=/opt/java/openjdk
 ARG OPENJDK_VERSION
 
 RUN apt-get update && \
-    apt-get install -y software-properties-common wget gnupg && \
+    apt-get install -y software-properties-common curl gnupg && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
-    wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - && \
+    curl -fsSL https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - && \
     add-apt-repository --yes https://packages.adoptium.net/artifactory/deb/ && \
     apt-get update && \
     apt-get install -y temurin-${OPENJDK_VERSION}-jdk && \
