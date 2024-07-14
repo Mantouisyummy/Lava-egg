@@ -14,10 +14,11 @@ ARG OPENJDK_VERSION
 RUN apt-get update && \
     apt-get install -y wget gnupg2 && \
     apt-get install -y software-properties-common && \
-    wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - && \
-    add-apt-repository --yes https://packages.adoptium.net/artifactory/deb/ && \
+    wget -qO - https://packages.termux.dev/termux-keyring.gpg | apt-key add - && \
+    echo "deb https://packages.termux.dev/termux-packages-24 stable main" > /etc/apt/sources.list.d/termux.list && \
     apt-get update && \
-    apt-get install -y temurin-${OPENJDK_VERSION}-jdk && \
+    apt-get install -y openjdk-${OPENJDK_VERSION}-jdk && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 RUN java -version
