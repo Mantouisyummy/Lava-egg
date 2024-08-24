@@ -10,11 +10,11 @@
     "description": "A Discord music bot integrated with Lavalink\r\n\u4e00\u53f0\u6574\u5408\u4e86 Lavalink \u7684 Discord Lava \u97f3\u6a02\u6a5f\u5668\u4eba",
     "features": null,
     "docker_images": {
-        "Python 3.12 and OpenJDK 21": "ghcr.io\/mantouisyummy\/pyandjdk:python-3.12-openjdk-21",
-        "Python 3.12 and OpenJDK 22": "ghcr.io\/mantouisyummy\/pyandjdk:python-3.12-openjdk-22",
-        "Python 3.10 and OpenJDK 21": "ghcr.io\/mantouisyummy\/pyandjdk:python-3.10-openjdk-21",
-        "Python 3.11 and OpenJDK 21": "ghcr.io\/mantouisyummy\/pyandjdk:python-3.11-openjdk-21",
-        "Python 3.11 and OpenJDK 22": "ghcr.io\/mantouisyummy\/pyandjdk:python-3.11-openjdk-22"
+        "Python 3.12 and OpenJDK 21": "ghcr.io\/mantouisyummy\/lava:python-3.12-openjdk-21",
+        "Python 3.12 and OpenJDK 22": "ghcr.io\/mantouisyummy\/lava:python-3.12-openjdk-22",
+        "Python 3.10 and OpenJDK 21": "ghcr.io\/mantouisyummy\/lava:python-3.10-openjdk-21",
+        "Python 3.11 and OpenJDK 21": "ghcr.io\/mantouisyummy\/lava:python-3.11-openjdk-21",
+        "Python 3.11 and OpenJDK 22": "ghcr.io\/mantouisyummy\/lava:python-3.11-openjdk-22"
     },
     "file_denylist": [],
     "startup": "if [[ -d .git ]] && [[ \"{{AUTO_UPDATE}}\" == \"1\" ]]; then git pull; fi; pip install -U --prefix .local -r ${REQUIREMENTS_FILE} && python \/home\/container\/main.py & if [[ \"{{START_LAVALINK}}\" == \"1\" ]]; then cd \/home\/container\/server\/ && java -jar Lavalink.jar; fi;",
