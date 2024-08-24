@@ -44,6 +44,7 @@ RUN apk add --no-cache \
         sqlite \
         fontconfig \
         py3-pandas \
+        git \
         py3-numpy \
         libstdc++
 
