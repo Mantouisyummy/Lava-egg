@@ -36,7 +36,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/mantouisyummy/pyandjdk:python-${{ matrix.python-version }}-openjdk-${{ matrix.openjdk-version }}
+            ghcr.io/mantouisyummy/Lava:python-${{ matrix.python-version }}-openjdk-${{ matrix.openjdk-version }}
           build-args: |
             PYTHON_VERSION=${{ matrix.python-version }}-alpine
             OPENJDK_VERSION=${{ matrix.openjdk-version }}
