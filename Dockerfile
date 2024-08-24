@@ -41,6 +41,10 @@ COPY --from=builder /opt/java /opt/java
 
 RUN apk add --no-cache \
         bash \
+        gcc \
+        python3-dev \
+        musl-dev \
+        linux-headers \
         sqlite \
         fontconfig \
         py3-pandas \
