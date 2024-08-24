@@ -1,0 +1,96 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY Jexactyl PANEL - jexactyl.com",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2024-08-24T23:37:33+08:00",
+    "name": "Lava",
+    "author": "opcantel@gmail.com",
+    "description": "A Discord music bot integrated with Lavalink\r\n\u4e00\u53f0\u6574\u5408\u4e86 Lavalink \u7684 Discord Lava \u97f3\u6a02\u6a5f\u5668\u4eba",
+    "features": null,
+    "docker_images": {
+        "Python 3.12 and OpenJDK 21": "ghcr.io\/mantouisyummy\/pyandjdk:python-3.12-openjdk-21",
+        "Python 3.12 and OpenJDK 22": "ghcr.io\/mantouisyummy\/pyandjdk:python-3.12-openjdk-22",
+        "Python 3.10 and OpenJDK 21": "ghcr.io\/mantouisyummy\/pyandjdk:python-3.10-openjdk-21",
+        "Python 3.11 and OpenJDK 21": "ghcr.io\/mantouisyummy\/pyandjdk:python-3.11-openjdk-21",
+        "Python 3.11 and OpenJDK 22": "ghcr.io\/mantouisyummy\/pyandjdk:python-3.11-openjdk-22"
+    },
+    "file_denylist": [],
+    "startup": "if [[ -d .git ]] && [[ \"{{AUTO_UPDATE}}\" == \"1\" ]]; then git pull; fi; pip install -U --prefix .local -r ${REQUIREMENTS_FILE} && python \/home\/container\/main.py & if [[ \"{{START_LAVALINK}}\" == \"1\" ]]; then cd \/home\/container\/server\/ && java -jar Lavalink.jar; fi;",
+    "config": {
+        "files": "{\r\n    \"server\/application.yml\": {\r\n        \"parser\": \"yaml\",\r\n        \"find\": {\r\n            \"server.address\": \"0.0.0.0\",\r\n            \"server.port\": \"{{server.build.default.port}}\"\r\n        }\r\n    },\r\n    \"configs\/lavalink.json\": {\r\n        \"parser\": \"json\",\r\n        \"find\": {\r\n            \"nodes[0].host\": \"127.0.0.1\",\r\n            \"nodes[0].port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"done\": \"Lavalink is ready to accept connections.\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# Lava Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n\r\napt update\r\napt install -y git curl wget tar\r\n\r\nREPO_URL=\"https:\/\/github.com\/Nat1anWasTaken\/Lava.git\"\r\nLAVALINK_JAR_URL=\"https:\/\/github.com\/lavalink-devs\/Lavalink\/releases\/latest\/download\/Lavalink.jar\"\r\nSERVER_DIR=\"\/mnt\/server\"\r\n\r\nif [ -d \"$SERVER_DIR\/.git\" ]; then\r\n    echo \"Existing repository found, pulling latest changes...\"\r\n    cd $SERVER_DIR\r\n    git pull\r\nelse\r\n    echo \"Cloning Lava Repository...\"\r\n    if git clone --depth 1 $REPO_URL $SERVER_DIR; then\r\n        echo \"Clone Lava complete\"\r\n    else\r\n        echo \"Clone Lava failed\"\r\n        exit 1\r\n    fi\r\nfi\r\n\r\necho \"Downloading Lavalink...\"\r\nmkdir -p $SERVER_DIR\/server\/\r\nif wget --tries=3 -O $SERVER_DIR\/server\/Lavalink.jar $LAVALINK_JAR_URL; then\r\n    echo \"Download Lavalink complete\"\r\nelse\r\n    echo \"Download Lavalink failed\"\r\n    exit 1\r\nfi\r\n\r\necho \"Copying Application.yml...\"\r\nif cp $SERVER_DIR\/configs\/application.yml $SERVER_DIR\/server\/application.yml; then\r\n    echo \"Copy complete\"\r\nelse\r\n    echo \"Copy failed\"\r\n    exit 1\r\nfi\r\n\r\nln -s $SERVER_DIR\/configs\/application.yml $SERVER_DIR\/server\/application.yml\r\n\r\necho \"Install complete\"\r\nexit 0",
+            "container": "python:3.8-slim-bookworm",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "BOT TOKEN",
+            "description": "Discord \u6a5f\u5668\u4eba\u7684\u4ee4\u724c",
+            "env_variable": "TOKEN",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:80",
+            "field_type": "text"
+        },
+        {
+            "name": "SPOTIFY_CLIENT_ID",
+            "description": "\u5982\u679c\u4f60\u60f3\u652f\u63f4Spotify\u64ad\u653e\uff0c\u8acb\u8f38\u5165\u5728\u9019\u88e1\r\n\u53c3\u8003\uff1ahttps:\/\/github.com\/Nat1anWasTaken\/LavaLauncher?tab=readme-ov-file#%E8%A8%AD%E7%BD%AE-spotify",
+            "env_variable": "SPOTIFY_CLIENT_ID",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "SPOTIFY_CLIENT_SECRET",
+            "description": "\u5982\u679c\u4f60\u60f3\u652f\u63f4Spotify\u64ad\u653e\uff0c\u8acb\u8f38\u5165\u5728\u9019\u88e1\r\n\u53c3\u8003\uff1ahttps:\/\/github.com\/Nat1anWasTaken\/LavaLauncher?tab=readme-ov-file#%E8%A8%AD%E7%BD%AE-spotify",
+            "env_variable": "SPOTIFY_CLIENT_SECRET",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "Start Lavalink",
+            "description": "\u662f\u5426\u984d\u5916\u555f\u52d5Lavalink\u4f3a\u670d\u5668 (\u5982\u679c\u4f60\u81ea\u5df1\u6709\u5247\u4e0d\u9808\u555f\u7528)",
+            "env_variable": "START_LAVALINK",
+            "default_value": "true",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Requirements file",
+            "description": "\u4f60\u7684\u5957\u4ef6\u4f9d\u8cf4\u9805\u6a94\u6848 \u9810\u8a2d\u4e0d\u9700\u66f4\u6539",
+            "env_variable": "REQUIREMENTS_FILE",
+            "default_value": "requirements.txt",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|",
+            "field_type": "text"
+        },
+        {
+            "name": "Auto Update",
+            "description": "\u81ea\u52d5\u62c9\u53d6\u6700\u65b0\u7684\u6a5f\u5668\u4eba\u6a94\u6848",
+            "env_variable": "AUTO_UPDATE",
+            "default_value": "true",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        }
+    ]
+}
