@@ -15,6 +15,10 @@ RUN apk add --update --no-cache \
     curl \
     openssl \
     git \
+    gcc \
+    linux-headers \
+    musl-dev \
+    python3-dev \
     tar \
     libstdc++ && \
     mkdir -p /opt/java && \
