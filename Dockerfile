@@ -16,7 +16,7 @@ RUN apk add --update --no-cache \
     openssl \
     git \
     gcc \
-    linux-headers \
+    build-base \
     musl-dev \
     python3-dev \
     tar \
