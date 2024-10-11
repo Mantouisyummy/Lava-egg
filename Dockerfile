@@ -19,7 +19,7 @@ RUN apk add --update --no-cache \
     build-base \
     musl-dev \
     python3-dev \
-    musl-dev \ 
+    musl-dev \
     linux-headers \
     tar \
     libstdc++ && \
