@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-10-12T22:03:06+08:00",
+    "exported_at": "2024-10-13T16:25:03+08:00",
     "name": "Lava",
     "author": "opcantel@gmail.com",
     "description": "A Discord music bot integrated with Lavalink.\r\n\u4e00\u53f0\u6574\u5408\u4e86 Lavalink \u7684 Discord Lava \u97f3\u6a02\u6a5f\u5668\u4eba.",
@@ -17,7 +17,7 @@
         "Python 3.11 and OpenJDK 22": "ghcr.io\/mantouisyummy\/lava:python-3.11-openjdk-22"
     },
     "file_denylist": [],
-    "startup": "echo \"Starting script execution...\"; echo \"Debug: START_LAVALINK value is '${START_LAVALINK}'\"; [ -z \"${START_LAVALINK}\" ] && echo \"Debug: START_LAVALINK is empty or not set\" && START_LAVALINK=0; if [ \"${START_LAVALINK}\" = \"1\" ] || [ \"${START_LAVALINK}\" = \"true\" ] || [ \"${START_LAVALINK}\" = \"yes\" ]; then echo \"START_LAVALINK is set to start Lavalink. Attempting to start both Python and Lavalink...\"; python \/home\/container\/main.py & echo \"Python script started with PID $!\"; cd \/home\/container\/server && java -jar Lavalink.jar & echo \"Lavalink started with PID $!\"; echo \"Both processes started.\"; else echo \"START_LAVALINK is not set to start Lavalink. Only starting Python script...\"; python \/home\/container\/main.py; fi; echo \"Script execution completed.\"; while true; do sleep 60; done",
+    "startup": "echo \"Starting script execution...\"; echo \"Debug: START_LAVALINK value is '${START_LAVALINK}'\"; [ -z \"${START_LAVALINK}\" ] && echo \"Debug: START_LAVALINK is empty or not set\" && START_LAVALINK=0; echo \"Installing Python dependencies from '${REQUIREMENTS_FILE}'...\"; pip install -U --prefix .local -r ${REQUIREMENTS_FILE}; if [ \"${START_LAVALINK}\" = \"1\" ] || [ \"${START_LAVALINK}\" = \"true\" ] || [ \"${START_LAVALINK}\" = \"yes\" ]; then echo \"START_LAVALINK is set to start Lavalink. Attempting to start both Python and Lavalink...\"; python \/home\/container\/main.py & echo \"Python script started with PID $!\"; cd \/home\/container\/server && java -jar Lavalink.jar & echo \"Lavalink started with PID $!\"; echo \"Both processes started.\"; else echo \"START_LAVALINK is not set to start Lavalink. Only starting Python script...\"; python \/home\/container\/main.py; fi; echo \"Script execution completed.\"; while true; do sleep 60; done",
     "config": {
         "files": "{\r\n    \"server\/application.yml\": {\r\n        \"parser\": \"yaml\",\r\n        \"find\": {\r\n            \"server.address\": \"0.0.0.0\",\r\n            \"server.port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"done\": \"Lavalink is ready to accept connections.\"\r\n}",
